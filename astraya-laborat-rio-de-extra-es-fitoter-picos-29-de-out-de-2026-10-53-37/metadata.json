@@ -1,0 +1,6 @@
+{
+  "name": "ASTRAYA - Laboratório de Extrações & Fitoterápicos",
+  "description": "Plataforma laboratorial de parâmetros de extração medicinal, diluição, envase, rastreabilidade, biblioteca de pesquisas e controle T-Check da ASTRAYA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

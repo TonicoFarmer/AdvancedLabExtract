@@ -1,0 +1,107 @@
+================================================================================
+ESPECIFICACOES TECNICAS E REQUISITOS DO SISTEMA - ASTRAYA LAB
+Plataforma de P&D Farmacotecnico, Extracoes e Fitoterapia Avancada
+================================================================================
+
+1. STACK TECNOLOGICO & ESTRUTURA DE LINGUAGEM
+--------------------------------------------------------------------------------
+* Linguagem Principal: TypeScript 5.x
+  - Tipagem estatica estrita em todos os modulos (/src/types.ts e componentes).
+  - Seguranca em tempo de compilacao para calculos farmacotecnicos, dosagens,
+    curvas termicas e parametros fitoquimicos.
+
+* Padrao JavaScript: ESNext / ECMAScript 2022+
+  - Modulos ESM (import/export).
+  - Optional Chaining (?.), Nullish Coalescing (??), desestruturacao e funcoes puras.
+
+* Biblioteca de Interface (UI Core): React 18+ (Functional Components & Hooks)
+  - useState, useReducer, useMemo e useCallback para calculos e tabelas de alta performance.
+  - React Context API (AppContext.tsx) para gestao de estado global, sessao ativa,
+    registros de lote e controle de layout.
+  - useEffect para persistencia reativa em tempo de execucao.
+
+* Estilizacao & Design System: Tailwind CSS v4
+  - Framework utilitario CSS com paleta de cores farmacotécnicas e clinicas:
+    Emerald (fitoterapia e laboratorio), Slate (neutro/instrumental) e Amber (terpenos/resinas).
+  - Design Responsivo Mobile-First com suporte nativo a smartphones, tablets e desktops.
+
+* Iconografia Vetorial: Lucide React
+  - Biblioteca consistente de icones vetoriais SVG otimizados.
+
+* Empacotador & Build: Vite 5.x / esbuild
+  - Compilacao ultra-rapida de modulos e otimizacao para producao.
+
+
+2. ARQUITETURA DE DIRETORIOS E COMPONENTES
+--------------------------------------------------------------------------------
+/src
+  |-- components/
+  |     |-- calculators/
+  |     |     |-- CalculadoraDosagemPesagemAstraya.tsx  (Calculo de rendimento, mg/mL, gotas e pesagens)
+  |     |     |-- CalculatorsSession.tsx                (Diluicoes alcoolicas, densidade e T-Check)
+  |     |     |-- DilutionCalculator.tsx                (Ajuste de concentracao hidroalcoolica)
+  |     |
+  |     |-- extractions/
+  |     |     |-- AlcoolGeloSecoSession.tsx             (Extracao etanol a frio / gelo seco a -78C)
+  |     |     |-- RosinSession.tsx                      (Prensagem solventless: pressao, micras e temp)
+  |     |     |-- DecarboxylationSession.tsx            (Curvas termicas de descarboxilacao THCA/CBDA)
+  |     |     |-- SensoryPanelSession.tsx               (Avaliacao sensorial e aromatica de terpenos)
+  |     |
+  |     |-- laboratory/
+  |     |     |-- LaboratorySession.tsx                 (Gestao de reagentes, estoque e fornecedores)
+  |     |     |-- EquipmentsSession.tsx                 (Controle e calibracao de balancas e T-Check)
+  |     |
+  |     |-- layout/
+  |     |     |-- Header.tsx                            (Cabecalho, relogio, exportacoes e seletor de tela)
+  |     |     |-- Navigation.tsx                        (Navegacao principal e barra de toque mobile)
+  |     |
+  |     |-- library/
+  |           |-- FitoterapiaGuide.tsx                  (Guia fitoquimico: canabinoides, terpenos e metodos)
+  |           |-- PopViewer.tsx                         (Manual POP Astraya - 34 secoes normativas MBPL)
+  |           |-- StudiesCannabisDrive.tsx              (Acervo de artigos cientificos e ensaios clinicos)
+  |
+  |-- context/
+  |     |-- AppContext.tsx                              (Estado centralizado, persistencia e responsividade)
+  |
+  |-- utils/
+  |     |-- exportUtils.ts                              (Exportacao de laudos em PDF e planilhas Excel/CSV)
+  |     |-- storage.ts                                  (Gerenciamento de persistencia em LocalStorage)
+  |
+  |-- types.ts                                          (Definicoes de tipos, interfaces e enums)
+  |-- App.tsx                                           (Componente raiz e roteador de visualizacao)
+  |-- main.tsx                                          (Ponto de entrada DOM)
+
+
+3. REQUISITOS FARMACOTECNICOS & CIENTIFICOS
+--------------------------------------------------------------------------------
+1. Calculos de Precisao:
+   - Fator de perda molecular por descarboxilacao (perda de CO2 de ~12.3% para THCA e ~12.9% para CBDA).
+   - Conversao estequiometrica de concentracao (mg/g, mg/mL, porcentagem % p/p e p/v).
+   - Compensacao de densidade de veiculos carreadores (MCT: 0.95 g/mL, Azeite: 0.92 g/mL, Canhamo: 0.93 g/mL).
+   - Calibracao de gotejamento (padrao 20 a 30 gotas/mL conforme viscosidade).
+
+2. Fundamentacao Bibliografica:
+   - Tratado "Fitoterapia Avancada: Uma Abordagem Quimica, Biologica e Nutricional"
+     (Valdir Cechinel Filho & Camile C. Cechinel Zanchett, Artmed, 2020).
+   - Classificacao de terpenoides (Monoterpenos C10, Sesquiterpenos C15, Tetraterpenos C40).
+   - Metodos de obtencao: arraste a vapor, fluido supercritico (CO2), particao com solventes apolares e HPLC/CLAE.
+   - Farmacopeia Brasileira (6a edicao, Anvisa) e RDC 67/2007 (Boas Praticas de Manipulacao - BPM/MBPL).
+
+3. Rastreabilidade & Exportacao:
+   - Geracao de laudos analiticos formatados para impressao direta (window.print / PDF).
+   - Exportacao de tabelas analiticas em Excel (.xlsx / .csv).
+
+
+4. REQUISITOS DE SISTEMA & COMPATIBILIDADE
+--------------------------------------------------------------------------------
+* Plataforma de Execucao: Web SPA (Single Page Application)
+* Ambiente / Runtime: Node.js 18+ / Navegadores modernos (Chrome, Firefox, Safari, Edge)
+* Responsividade:
+  - Totalmente adaptativo para Smartphones (Mobile-first, touch target >= 44px)
+  - Tablets / iPads (layout fluido com sumarios colapsaveis)
+  - Desktops & Monitores Widescreen (multi-colunas e dashboards)
+* Modo de Visualizacao Integrado:
+  - Botoes de alternancia no Header: Auto (Fluido), Celular, Tablet e Desktop.
+* Persistencia:
+  - Armazenamento em Web Storage API (localStorage) do cliente com funcionalidade de Reset.
+================================================================================
